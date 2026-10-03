@@ -39,6 +39,7 @@ def macos_config():
                 "-framework",
                 "Cocoa",
                 "-Wl,-undefined,dynamic_lookup",
+		        "-rpath", "@loader_path", # DynamicLink
                 "-rpath", "@loader_path/.."
             ]
         )
