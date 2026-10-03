@@ -9,7 +9,7 @@ class FmodObjectTree : public Tree
     GDCLASS(FmodObjectTree, Tree);
 
   public:
-    enum DisplayFlags : uint
+    enum DisplayFlags : uint32_t
     {
         FMOD_DISPLAY_BANKS = 1,
         FMOD_DISPLAY_EVENTS = 2,

@@ -63,7 +63,7 @@ void CommandInput::_gui_input(const Ref<InputEvent> &p_event)
     Ref<InputEventKey> key = p_event;
     if (key.is_valid() && key->is_pressed())
     {
-        if (key->get_keycode_with_modifiers() == static_cast<Key>(KEY_ENTER | KEY_MASK_SHIFT))
+        if (key->get_keycode_with_modifiers() == static_cast<Key>(static_cast<uint32_t>(KEY_ENTER) | static_cast<uint32_t>(KEY_MASK_SHIFT)))
         {
             insert_text_at_caret("\n");
             accept_event();
