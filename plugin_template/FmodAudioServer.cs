@@ -10,6 +10,36 @@ namespace FmodGodot
     using Godot;
     using Godot.NativeInterop;
 
+#if GODOT_MACOS
+    // macOS won't find a library by bare name like Windows and Linux do, so point .NET at the bin
+    // folder next to FmodGodot.gdextension in the editor, or the app bundle's Frameworks folder in an exported game
+    internal static class MacLibraryResolver
+    {
+        [global::System.Runtime.CompilerServices.ModuleInitializer]
+        internal static void Register()
+        {
+            var context = global::System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(typeof(MacLibraryResolver).Assembly);
+            if (context != null)
+                context.ResolvingUnmanagedDll += Resolve;
+        }
+
+        private static IntPtr Resolve(global::System.Reflection.Assembly assembly, string name)
+        {
+            var dirs = new global::System.Collections.Generic.List<string>();
+            foreach (string extension in GDExtensionManager.GetLoadedExtensions())
+                if (extension.GetFile() == "FmodGodot.gdextension")
+                    dirs.Add(ProjectSettings.GlobalizePath(extension.GetBaseDir().PathJoin("bin/macos/universal")));
+            dirs.Add(global::System.IO.Path.Combine(global::System.IO.Path.GetDirectoryName(OS.GetExecutablePath()), "..", "Frameworks"));
+            string[] files = { name, $"lib{name}.dylib" };
+            foreach (string dir in dirs)
+                foreach (string file in files)
+                    if (NativeLibrary.TryLoad(global::System.IO.Path.Combine(dir, file), out IntPtr handle))
+                        return handle;
+            return IntPtr.Zero;
+        }
+    }
+#endif
+
     public static partial class FmodAudioServer : Object
     {
         static FmodAudioServer()
