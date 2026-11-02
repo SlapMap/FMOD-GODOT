@@ -1,5 +1,6 @@
 #pragma once
 #include <classes/tree.hpp>
+#include <cstdint>
 using namespace godot;
 
 namespace FmodGodot
