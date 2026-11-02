@@ -31,6 +31,8 @@ namespace FmodGodot
             public const string dll = $"libFmodGodot.{template}";
 #elif GODOT_LINUXBSD || GODOT_ANDROID
             public const string dll = $"libFmodGodot.{template}.so.1";
+#elif GODOT_MACOS
+            public const string dll = $"libFmodGodot.{template}.dylib";
 #endif
         }
         private static FMOD.Studio.System studio;
