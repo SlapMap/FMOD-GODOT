@@ -186,6 +186,33 @@ def setup_android(token: str, version: str):
     shutil.move(os.path.join(lib_dst, "armeabi-v7a"), os.path.join(lib_dst, "arm"))
 
 
+def setup_macos(token: str, version: str):
+    download_version(version, token, "macos")
+    filename: str = get_file_name(version, "macos")
+    dmg_path = os.path.join(script_dir, filename)
+    mount_point = os.path.join(script_dir, "fmod_mount")
+    os.makedirs(mount_point, exist_ok=True)
+    result = subprocess.run(
+        ["hdiutil", "attach", "-readonly", "-nobrowse", "-mountpoint", mount_point, dmg_path]
+    )
+    if result.returncode != 0:
+        print("Failed to mount %s" % filename)
+        exit(ERR_INSTALL)
+    try:
+        base_path = os.path.join(mount_point, "FMOD Programmers API", "api")
+        copy_headers_and_libs(base_path=base_path, platform="macos")
+    finally:
+        subprocess.run(["hdiutil", "detach", mount_point])
+        os.rmdir(mount_point)
+    os.remove(dmg_path)
+    # The mac dylibs are universal (x86_64 + arm64) so they go under libs/macos/universal
+    lib_dst = os.path.join(script_dir, "libs", "macos")
+    os.makedirs(os.path.join(lib_dst, "universal"), exist_ok=True)
+    for f in os.listdir(lib_dst):
+        if f.endswith(".dylib"):
+            os.replace(os.path.join(lib_dst, f), os.path.join(lib_dst, "universal", f))
+
+
 def setup_windows(token: str, version: str):
     download_version(version, token, "windows")
     filename: str = get_file_name(version, "windows")
@@ -268,6 +295,8 @@ def main():
                         setup_linux(token, version)
                 case "windows":
                     setup_windows(token, version)
+                case "macos":
+                    setup_macos(token, version)
                 case "android":
                     setup_android(token, version)
                 case _:

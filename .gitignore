@@ -19,3 +19,4 @@ git-filter-repo
 src/gen/
 compile_commands.json
 **/__pycache__/
+*.dmg
