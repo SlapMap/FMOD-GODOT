@@ -22,6 +22,16 @@ Use export.py to build the extension and add it to a project. Which manages copy
    python3 export.py build -p <platform>
    python3 export.py export <path/to/project>/addons
 
+Linux arm64
+~~~~~~~~~~~
+
+The FMOD Linux download ships arm64 libraries alongside x86_64, so ``fmod_installer.py setup`` places them in
+``libs/linux/arm64`` automatically. Build on an arm64 Linux machine (e.g. a Raspberry Pi 4/5 running a 64-bit OS);
+the architecture is detected automatically, or can be passed explicitly:
+
+.. code-block::
+   python3 export.py build -p linux -a arm64
+
 Alternatively refer to `introduction to the buildsystem`_
 
 .. _introduction to the buildsystem: https://docs.godotengine.org/en/stable/engine_details/development/compiling/introduction_to_the_buildsystem.html

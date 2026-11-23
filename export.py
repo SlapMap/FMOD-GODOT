@@ -14,9 +14,14 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 
 
 def get_arch() -> str:
-    arch = platform.machine()
-    if arch == "AMD64":
-        arch = "x86_64"
+    # Map the host's machine name onto Godot's architecture names
+    arch = platform.machine().lower()
+    if arch in ["amd64", "x86_64", "x64"]:
+        return "x86_64"
+    if arch in ["aarch64", "arm64", "armv8l", "armv8"]:
+        return "arm64"
+    if arch.startswith("armv7") or arch in ["arm", "armhf", "armv6l"]:
+        return "arm32"
     return arch
 
 

@@ -22,6 +22,10 @@ linux.editor.x86_64 = "bin/linux/x86_64/libFmodGodot.editor.so"
 linux.debug.x86_64 = "bin/linux/x86_64/libFmodGodot.template_debug.so"
 linux.release.x86_64 = "bin/linux/x86_64/libFmodGodot.template_release.so"
 
+linux.editor.arm64 = "bin/linux/arm64/libFmodGodot.editor.so"
+linux.debug.arm64 = "bin/linux/arm64/libFmodGodot.template_debug.so"
+linux.release.arm64 = "bin/linux/arm64/libFmodGodot.template_release.so"
+
 macos.editor = "bin/macos/universal/libFmodGodot.editor.dylib"
 macos.debug = "bin/macos/universal/libFmodGodot.template_debug.dylib"
 macos.release = "bin/macos/universal/libFmodGodot.template_release.dylib"
@@ -77,6 +81,19 @@ linux.debug.x86_64  = {
 linux.release.x86_64 = {
     "bin/linux/x86_64/libfmod.so.14": "",
     "bin/linux/x86_64/libfmodstudio.so.14": "",
+}
+
+linux.editor.arm64  = {
+    "bin/linux/arm64/libfmodL.so.14": "",
+    "bin/linux/arm64/libfmodstudioL.so.14": "",
+}
+linux.debug.arm64  = {
+    "bin/linux/arm64/libfmodL.so.14": "",
+    "bin/linux/arm64/libfmodstudioL.so.14": "",
+}
+linux.release.arm64 = {
+    "bin/linux/arm64/libfmod.so.14": "",
+    "bin/linux/arm64/libfmodstudio.so.14": "",
 }
 
 android.editor.x86_64  = {
